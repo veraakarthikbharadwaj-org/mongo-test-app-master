@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h4>Hi, please log in!</h4>
+    <h2>Regex Injection Endpoint - /user_id/$UID</h2>
+    <li>The intended functionality of this endpoint is to look up information about users based on user ID. Navigate to <i>/user_id/$someUID</i> to return information about that user.</li>
+    <li>This is a regex injection, so the payload is very simple. If you navigate to <i>user_id/.*</i>, it should return a list of user IDs for all the users in the database.</li>
+    <h2>Where Injection Endpoint - /user/$someUsername</h2>
+	<li>The intended functionality of this endpoint is to look up information about users based on username. Navigate to <i>/user/$username</i> to return information about that user.</li>
+    <li>This is a $where operator injection, so the payload is more complicated than the regex one, though only slightly. Navigating to <i>user/admin"%20%7C%7C%20""%20==%20"</i> should return a list of user IDs for all the users in the database by truncating the username query string and adding a conditional OR where an empty space equal an empty space.</li>
+    <br></br>
+    <h2>DEBUG INFO:</h2>
+    <h3><li>/api/list_users</li></h3>
+    <p>This endpoint exists solely to ensure that the database has been populated properly.</p>
+    <p>It returns a list of users in the database with some details about usernames and user IDs which can be used to build queries to the vulnerable endpoints:</p>
+    <h3><a href="/api/list_users">database contents api</a></h3>
+    <h3><li>/login</li></h3>
+	<p>The login endpoint is vestigial functionality from an intial iteration of the test app. It currently doesn't do anything for vulnerabiltiy demonstration purposes, but I'm leaving it in here in case we need it later. Feel free to play around with it if you're bored.</p>    
+{% endblock %}
